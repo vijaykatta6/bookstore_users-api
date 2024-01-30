@@ -3,6 +3,7 @@ package users_domain
 import (
 	"fmt"
 
+	dateutils "github.com/vijaykatta6/bookstore-users-api/utils/date_utils"
 	rest_errors "github.com/vijaykatta6/bookstore-users-api/utils/errors"
 )
 
@@ -37,6 +38,9 @@ func (user *User) Save() *rest_errors.RestErr {
 		}
 		return rest_errors.NewBadRequestError(fmt.Sprintf("user %d already exists", user.Id))
 	}
+
+	user.DateCreated = dateutils.GetNowString()
+
 	userDB[user.Id] = user
 	return nil
 
